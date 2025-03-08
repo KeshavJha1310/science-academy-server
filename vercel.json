@@ -9,7 +9,7 @@
             "dest":"/"
         },
         {
-            "src":"/teachers/(.*)",
+            "src":"/teacher/(.*)",
             "dest":"/"
         }
     ]
