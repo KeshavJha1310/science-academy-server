@@ -30,7 +30,7 @@ if(_data){
 }else{
     return res.send({code : 500 , message: 'Server error'})  
 }
-}
+} 
 
 module.exports.addAdmins = async (req ,res)=>{
 const _data = await adminModel.find({})

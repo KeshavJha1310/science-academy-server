@@ -69,7 +69,13 @@ const student = multer3({ storage: storage3 });
 
 const app = express()
 
-app.use(cors())
+app.use(cors(
+  {
+    origin:["https://science-academy-server.vercel.app"],
+    methods:["POST","GET","OPTIONS"],
+    credentials:true
+  }
+))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 app.use('/upload' , express.static('upload'))
@@ -77,7 +83,7 @@ app.use('/teacher' , express.static('teacher'))
 app.use('/students' , express.static('students'))
 
 
-mongoose.connect('mongodb://127.0.0.1:27017/mydata', {
+mongoose.connect('mongodb+srv://scienceacademy:science2025@cluster0.thqvo.mongodb.net/test', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   connectTimeoutMS: 30000,
@@ -92,10 +98,10 @@ mongoose.connect('mongodb://127.0.0.1:27017/mydata', {
   } catch (error) {
       console.error('Error initializing class structure:', error.message);
   }
-})();
+})(); 
 })
 .catch(err => {
-  console.log('DB Error:', err);
+  console.log('DB Error:', err); 
 });
 
 // Define your routes here
