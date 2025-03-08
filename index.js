@@ -71,7 +71,7 @@ const app = express()
 
 app.use(cors(
   {
-    origin:["https://science-academy-server.vercel.app"],
+    origin:["http://localhost:3001"],
     methods:["POST","GET","OPTIONS"],
     credentials:true
   }
