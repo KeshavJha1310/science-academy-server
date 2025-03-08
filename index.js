@@ -83,7 +83,7 @@ app.use('/teacher' , express.static('teacher'))
 app.use('/students' , express.static('students'))
 
 
-mongoose.connect('mongodb+srv://scienceacademy:science2025@cluster0.thqvo.mongodb.net/test', {
+mongoose.connect('mongodb+srv://scienceacademy:science2025@cluster0.thqvo.mongodb.net/test?retryWrites=true&w=majority&appName=Cluster0', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   connectTimeoutMS: 30000,
@@ -91,7 +91,7 @@ mongoose.connect('mongodb+srv://scienceacademy:science2025@cluster0.thqvo.mongod
 .then(async () => {
   console.log('DB successfully Connected');
 // Call the function during server startup
-(async () => {
+(async () => { 
   try {
       await classStructure.classStructure();
       console.log('Class structure initialized.');
