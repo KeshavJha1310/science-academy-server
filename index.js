@@ -124,6 +124,7 @@ app.post('/api/teachers', teacher.array('teacherPic', 1), teacher_controller.add
 app.get('/api/teachers', teacher_controller.getTeacher);
 app.put('/api/teachers/update/:id',teacher.array('teacherPic', 1),teacher_controller.updateTeacher)
 app.delete('/api/teachers/:id', teacher_controller.deleteTeacher);
+app.use("/teacher", express.static(path.join(__dirname, "teacher")));
 
 app.post('/api/subjects',subject_controller.addSubject);
 app.get('/api/subjectsDetails',subject_controller.getSubjectDetails);
