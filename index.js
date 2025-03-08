@@ -83,7 +83,7 @@ app.use('/teacher' , express.static('teacher'))
 app.use('/students' , express.static('students'))
 
 
-mongoose.connect('mongodb+srv://scienceacademy:science2025@cluster0.thqvo.mongodb.net/test?retryWrites=true&w=majority&appName=Cluster0', {
+mongoose.connect('mongodb+srv://scienceacademy:science2025@cluster0.thqvo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   connectTimeoutMS: 30000,
