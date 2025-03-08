@@ -2,7 +2,7 @@
   const bodyParser = require('body-parser');
   const mongoose = require('mongoose')
   const cors = require('cors')
-  require('dotenv').config();
+  // require('dotenv').config();
   const { sendMail } = require('./Controllers/gmailAPI');
 
 // const router = express.Router();
@@ -150,14 +150,14 @@ app.post('/api/emails', async (req, res) => {
     // Inquiry Email to Admin
     await sendMail({
       from: `${userName} <${userEmail}>`,
-      to: process.env.ADMIN_EMAIL, // Admin Email
+      to: 'yabhay1521@gmail.com', // Admin Email
       subject: 'Inquiry',
       html: `<p>${userMessage}</p>`,
     });
 
     // Auto-responder Email to User
     await sendMail({
-      from: process.env.ADMIN_EMAIL,
+      from: 'yabhay1521@gmail.com',
       to: userEmail,
       subject: 'Science Academy 🏫',
       html: `
@@ -181,7 +181,7 @@ app.post('/api/emails', async (req, res) => {
   }
 });
 
-const port = process.env.PORT || 5000;
+const port = 5000;
 app.listen(port, () =>{ 
   console.log(`Server re-started on port ${port}`)
 }); 
