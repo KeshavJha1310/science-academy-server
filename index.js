@@ -71,7 +71,7 @@ const app = express()
 
 app.use(cors(
   {
-    origin:["https://science-academy-frontend.vercel.app","https://www.scienceacademys.com"],
+    origin:["https://scienceacademys.com"],
     methods:["POST","GET","OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials:true
@@ -82,12 +82,12 @@ app.use(bodyParser.json())
 app.use('/upload' , express.static('upload'))
 app.use('/teacher' , express.static('teacher'))
 app.use('/students' , express.static('students'))
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://science-academy-frontend.vercel.app");
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
+app.options("*", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "https://science-academy-frontend.vercel.app");
+    res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
 });
 
 mongoose.connect('mongodb+srv://scienceacademy:science2025@cluster0.thqvo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
