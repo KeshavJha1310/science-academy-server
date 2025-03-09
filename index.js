@@ -73,6 +73,7 @@ app.use(cors(
   {
     origin:["https://science-academy-frontend.vercel.app/","https://scienceacademys.com/"],
     methods:["POST","GET","OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials:true
   }
 ))
