@@ -71,7 +71,7 @@ const app = express()
 
 app.use(cors(
   {
-    origin:["https://scienceacademys.com","http://localhost:3000/"],
+    origin:["https://scienceacademys.com","https://127.0.0.1:3000"],
     methods:["POST","GET","OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials:true
