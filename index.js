@@ -79,6 +79,7 @@ app.use(cors(
 ))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
+app.use("/upload", express.static(path.join(__dirname, "upload")));
 app.use('/upload' , express.static('upload'))
 app.use('/teacher' , express.static('teacher'))
 app.use('/students' , express.static('students'))
