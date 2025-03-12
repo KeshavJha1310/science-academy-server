@@ -18,7 +18,7 @@
         },
         {
             "src":"/upload/(.*)",
-            "dest":"/"
+            "dest":"/upload"
         }
     ]
 }
