@@ -52,14 +52,35 @@ module.exports.addNoticeImg = async(req, res) => {
     }
   };
 
-module.exports.getNoticeImg = async (req ,res)=>{
+// module.exports.getNoticeImg = async (req ,res)=>{
 
-const _data = await notice_images_models.find({});
-if(_data){
-    return res.send({code: 200 , message:'Added_successfully', data:_data})
-}else{
-    return res.send({code : 500 , message: 'Server error'})  
-}
+// const _data = await notice_images_models.find({});
+// if(_data){
+//     return res.send({code: 200 , message:'Added_successfully', data:_data})
+// }else{
+//     return res.send({code : 500 , message: 'Server error'})  
+// }
 
 
-}
+// }
+
+module.exports.getNoticeImg = async (req, res) => {
+  try {
+      const _data = await notice_images_models.find({});
+
+      if (!_data || _data.length === 0) {
+          return res.status(404).send({ code: 404, message: "No images found" });
+      }
+
+      // Assuming your MongoDB stores only the file names, construct the full URL
+      const baseUrl = req.protocol + "://" + req.get("host"); // Dynamically get domain
+      const imageData = _data.map((img) => ({
+          ...img._doc, // Spread existing document fields
+          imageUrl: `${baseUrl}/upload/${img.filename}`, // Construct full URL
+      }));
+
+      return res.status(200).send({ code: 200, message: "Success", data: imageData });
+  } catch (error) {
+      return res.status(500).send({ code: 500, message: "Server error", error });
+  }
+};
