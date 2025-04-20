@@ -30,7 +30,7 @@ if(_data){
 }else{
     return res.send({code : 500 , message: 'Server error'})  
 }
-}
+} 
 
 module.exports.addAdmins = async (req ,res)=>{
 const _data = await adminModel.find({})
@@ -49,6 +49,7 @@ module.exports.loginAdmins = async (req, res) => {
         let user = await adminModel.findOne({ AdminId: AdminId  });
 
         if (user) {
+            console.log(user)
             const isPasswordValid = user.AdminPassword === AdminPassword;
             if (isPasswordValid) {
                 // Convert the user object to a plain JavaScript object

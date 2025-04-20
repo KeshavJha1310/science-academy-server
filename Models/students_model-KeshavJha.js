@@ -31,7 +31,7 @@ const studentSchema = new mongoose.Schema({
     ClassStd: String,
     TotalFees: String,
     Subjects: [String],
-    Teachers: [teacherSchema], // Array of teacherSchema
+    Teachers: [teacherSchema], 
   },
 });
 

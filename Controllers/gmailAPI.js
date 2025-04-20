@@ -1,59 +1,54 @@
-require('dotenv').config();
-const nodemailer = require('nodemailer');
-const { google } = require('googleapis');
+const nodemailer = require('nodemailer')
+const {google} = require('googleapis')
 
-// Load environment variables
-const CLIENT_ID = '99224369334-m490b79jpv5uk9c8r78tltsi8np9d14d.apps.googleusercontent.com';
-const CLIENT_SECRET = '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';
-const REDIRECT_URL = 'https://developers.google.com/oauthplayground';
-const REFRESH_TOKEN = '1//04PTZFLgo35IvCgYIARAAGAQSNwF-L9IroEwhm7PN_I0vjLKlCCTDKh2NknsRSI1Cx4Fj0PLTNkNfTUInMtYLHW6hFbjhCUaHytg';
-const CONFIGURED_EMAIL = 'keshavjha2737@gmail.com';
+const CLIENT_ID = '99224369334-m490b79jpv5uk9c8r78tltsi8np9d14d.apps.googleusercontent.com'
+const CLIENT_SECRET = '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'
+const REDIRECT_URL = 'https://developers.google.com/oauthplayground'
+const REFRESH_TOKEN = '1//04RmX_7rPLvFdCgYIARAAGAQSNwF-L9IrDVS4mYNvBxrpmcqYwXVtt71r1QuoqwkE3jUwXE2WNZm7tL6CQC5xEeFPNKxmvLl9kA0'
 
-// Configure OAuth2 Client
-const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
-oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
-
-// Function to get access token
-const getAccessToken = async () => {
-  try {
-    const { token } = await oAuth2Client.getAccessToken();
-    return token;
-  } catch (error) {
-    console.error("❌ Error retrieving access token:", error);
-    throw new Error("Failed to retrieve access token");
-  }
-};
-
+const oAuth2Client = new google.auth.OAuth2(CLIENT_ID,CLIENT_SECRET,REDIRECT_URL,REFRESH_TOKEN) 
+oAuth2Client.setCredentials({refresh_token : REFRESH_TOKEN })
 // Function to send an email
-const sendMail = async ({ from, to, subject, html }) => {
-  try {
-    const accessToken = await getAccessToken();
+async function sendMail() {
+    try {
+        // Get the access token
+        const accessToken = await oAuth2Client.getAccessToken();
 
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        type: 'OAuth2',
-        user: CONFIGURED_EMAIL,
-        pass: 'advr xskn afse ainw',
-        clientId: CLIENT_ID,
-        clientSecret: CLIENT_SECRET,
-        refreshToken: REFRESH_TOKEN,
-        accessToken: accessToken,
-      },
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
+        // Create a Nodemailer transport
+        const transport = nodemailer.createTransport({
+            service: 'Gmail', // Use 'Gmail' here
+            auth: {
+                type: 'OAuth2',
+                user: 'keshavjha2737@gmail.com', // Your Gmail email address
+                clientId: CLIENT_ID,
+                clientSecret: CLIENT_SECRET,
+                refreshToken: REFRESH_TOKEN,
+                accessToken: accessToken,
+            },
+            tls: {
+                rejectUnauthorized: false,
+            },
+        });
 
-    const mailOptions = { from, to, subject, html };
-    const result = await transporter.sendMail(mailOptions);
-    
-    console.log(`✅ Email sent successfully to ${to}`);
-    return result;
-  } catch (error) {
-    console.error(`❌ Email sending failed: ${error.message}`);
-    throw new Error('Email sending failed');
-  }
-};
+        // Email options
+        const mailOptions = {
+            from: 'Science Academy 🏫 <keshavjha2737@gmail.com>',
+           // to: 'yabhay1521@gmail.com', // Recipient's email address
+           to: 'yabhay1521@gmail.com',
+            subject: 'Subject of the email',
+            text: 'Hello, this is a test email from Gmail API.',
+            html: '<h1>Hello, this is a test email from Gmail API.</h1>',
+        };
 
-module.exports = { sendMail };
+        // Send the email
+        const result = await transport.sendMail(mailOptions);
+        return result;
+    } catch (error) {
+        return error;
+    }
+}
+
+// Call the sendMail function
+sendMail()
+    .then((result) => console.log('Email sent...', result))
+    .catch((error) => console.error('Error:', error.message));

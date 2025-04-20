@@ -4,8 +4,9 @@ module.exports = mongoose.model('teacherModel' , {
     teacherPic : String,
     teacherName : String,
     qualification : String,
-    subject : String,
-    experiance : String,
+    subject : Array,
+    experiance : Number,
     status: String,
     type : String,
+    classes : Array
 }); 

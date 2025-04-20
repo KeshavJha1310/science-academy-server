@@ -15,7 +15,7 @@ const findTeachersWithSubjects = async (teacherName) => {
       return teachers;
     } else {
       // No teachers found for the specified subjects
-      // console.log("NOOOOoOOOOOOooOOOOoOOOo")
+  
       return "No teachers found for the specified subjects.";
     }
   } catch (error) {
@@ -26,23 +26,23 @@ const findTeachersWithSubjects = async (teacherName) => {
 
 module.exports.addStudent = async (req, res) => {
    
-  console.log(req.files, req.body, 16); // Make sure req.files and req.body are defined and contain the expected data
-    const files = req.files;
-    const StudentName = req.body.StudentName;
-    const StudentFatherName = req.body.StudentFatherName;
-    const StudentMotherName = req.body.StudentMotherName;
-    const StudentContactNumber = req.body.StudentContactNumber;
-    const StudentClassId = req.body.StudentClassId;
-    const StudentClassPassword = req.body.StudentClassPassword;
-    const StudentLoginID = req.body.StudentLoginId;
+  console.log("file",req.file, "student info", req.body, 16); // Make sure req.files and req.body are defined and contain the expected data
+    const files = req.file;
+    const StudentName = req.body.userName;
+    const StudentFatherName = req.body.fatherName;
+    const StudentMotherName = req.body.motherName;
+    const StudentContactNumber = req.body.contactNo;
+    const StudentClassId = req.body.className;
+    const StudentClassPassword = req.body.password;
+    const StudentLoginID = req.body.StudentLoginID;
     const StudentLoginPassword = req.body.StudentLoginPassword;
-    const StudentAddmissionDate = req.body.StudentAddmissionDate;
-    const SchoolName = req.body.SchoolName;
-    const StudentAddress = req.body.StudentAddress;
+    const StudentAddmissionDate = req.body.addmissionDate;
+    const SchoolName = req.body.schoolName;
+    const StudentAddress = req.body.studentAddress;
     const status = req.body.status;
     const type = req.body.type;
-    const Class = req.body.Class;
-    const Gender = req.body.Gender;
+    const Class = req.body.sections;
+    const Gender = req.body.gender;
 if (!files || 
   !StudentName || 
   !StudentFatherName || 
@@ -66,10 +66,10 @@ if (!files ||
     console.log(StudentLoginPassword)
     console.log(StudentClassId)
     console.log(StudentClassPassword)
-    const studentPicPaths = files.map((file) => file.path);
+    // const studentPicPaths = files.path;
     // Assuming that the 'StudentPic' field in the form supports multiple files, loop through the array of files
-    for (const file of files) {
-      const StudentPic = file.path;
+    // for (const file of files) {
+      const StudentPic = files.path;
       // Create a new document using the students_model model and save it to the database
       const new_student = new StudentsModel({ 
         StudentPic: StudentPic,
@@ -82,9 +82,9 @@ if (!files ||
         StudentAddmissionDate: StudentAddmissionDate,
         SchoolName : SchoolName ,
         StudentAddress : StudentAddress,
-          status:status , 
-          type:type ,
-          Gender : Gender,
+        status:status , 
+        type:type ,
+        Gender : Gender,
           Class :{
             StudentID : null,
             StudentClassId : StudentClassId,
@@ -105,17 +105,17 @@ if (!files ||
           }
         });
       try {
+        console.log("new_student :-",new_student)
         const success = await new_student.save();
+        console.log("success :- ",success)
         success.Class.StudentID = success._id;
         if (Class == "Class 1") {
           console.log("entering...")
           success.Class.TotalFees = 19000;
           success.Class.Subjects = ["Science", "Maths"];
           const teacherName = ["Abhay Yadav", "Pooja Yadav"];
-          console.log("entering......")
           findTeachersWithSubjects(teacherName)
             .then((teachers) => {
-          console.log("entering...!")
               if (teachers === "No teachers found for the specified subjects.") {
                 console.log("No teachers Available");
               } else {
@@ -564,9 +564,9 @@ if (!files ||
       } catch (error) {
         return res.status(500).json({ code: 500, message: 'Server error' });
       }
-    }
+    // }
     // Send a success response along with the student paths in the data array
-    return res.status(200).json({ code: 200, message: 'Added_successfully', data: studentPicPaths });
+    return res.status(200).json({ code: 200, message: 'Added_successfully', data: StudentPic });
   };
 
 
